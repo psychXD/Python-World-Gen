@@ -1,19 +1,18 @@
 import math
 import numpy as np
-from terrain import loadHeightMap  # ✅ Import heightmap
+from worldgen.terrain import loadHeightMap  # 
 
-# 📌 Hexagonal Grid System
+# Hexagonal Grid System
 # This file handles converting (x, y) positions into hexagonal (q, r) coordinates.
 # It will be used by `biome.py` and `main.py` to structure the world into hexagons.
 
-# ✅ Constants for hex size & calculations
-HEX_SIZE = 10  # Adjust this to control hexagon width
+HEX_SIZE = 10  # hexagon width
 SQRT_3 = math.sqrt(3)  # Used for axial coordinate calculations
 
 def world_to_hex(x, y):
     """
-    📌 Converts (x, y) world coordinates into (q, r) hexagonal coordinates.
-    - Uses axial coordinate system for hexagonal grids.
+     Converts (x, y) world coordinates into (q, r) hexagonal coordinates.
+    Uses axial coordinate system for hexagonal grids.
     """
     q = (2/3 * x) / HEX_SIZE
     r = (-1/3 * x + SQRT_3/3 * y) / HEX_SIZE
@@ -21,7 +20,7 @@ def world_to_hex(x, y):
 
 def hex_to_world(q, r):
     """
-    📌 Converts (q, r) hexagonal coordinates back into (x, y) world coordinates.
+     Converts (q, r) hexagonal coordinates back into (x, y) world coordinates.
     - Helps when rendering objects at correct positions.
     """
     x = HEX_SIZE * (3/2 * q)
@@ -30,7 +29,7 @@ def hex_to_world(q, r):
 
 def get_height_for_hex(q, r, heightmap):
     """
-    📌 Returns the height from the heightmap for a given hex (q, r).
+   Returns the height from the heightmap for a given hex (q, r).
     - Converts hex to (x, y) and finds the closest heightmap value.
     """
     x, y = hex_to_world(q, r)  # Convert hex to world coords
@@ -40,7 +39,7 @@ def get_height_for_hex(q, r, heightmap):
 
 def get_neighboring_hexes(q, r):
     """
-    📌 Returns a list of neighboring hexes for a given (q, r) coordinate.
+    Returns a list of neighboring hexes for a given (q, r) coordinate.
     - Helps in biome blending & efficient world loading.
     """
     directions = [(1, 0), (0, 1), (-1, 1), (-1, 0), (0, -1), (1, -1)]
@@ -48,7 +47,7 @@ def get_neighboring_hexes(q, r):
 
 def distance_between_hexes(q1, r1, q2, r2):
     """
-    📌 Returns the hex distance between two hexagonal coordinates.
+     Returns the hex distance between two hexagonal coordinates.
     - Helps in field-of-view optimizations.
     """
     return max(abs(q1 - q2), abs(r1 - r2), abs(q1 + r1 - q2 - r2))
